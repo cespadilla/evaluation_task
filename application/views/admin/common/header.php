@@ -64,6 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
+                            <a class="navbar-brand topnav" href="#" >Home</a>
                             <a class="navbar-brand topnav" href="<?php echo base_url();?>admin/user/logout" >log out</a>
                         </li>
                         

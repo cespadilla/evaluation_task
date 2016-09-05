@@ -7,7 +7,8 @@ class Content extends Base_Controller {
         parent::__construct();
         
         $this->models = array(
-            'user'
+            'user',
+            'content'
         );
         
         $this->_load_models();
@@ -15,13 +16,25 @@ class Content extends Base_Controller {
 
 	public function index()
 	{
-		$data['title'] = "Dashboard";
-        $this->load->view('admin/common/header',$data);
-        $this->load->view('admin/dashboard');
-        $this->load->view('admin/common/footer');
-	}
 
-	public function logout(){
+		$data['title'] = "Dashboard";
+        // $data['data'] ="";
+        $data['data'] = $this->read();
+        $this->load->view('admin/common/header',$data);
+        $this->load->view('admin/content');
+        $this->load->view('admin/common/footer');
+    }
+
+    public function logout(){
 		$this->user->logout();
 	}
+
+    public function create(){
+        $this->content->create();
+    }
+
+    public function read(){
+        return $this->content->read();
+    }
 }
+

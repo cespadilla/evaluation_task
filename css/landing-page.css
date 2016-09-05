@@ -195,3 +195,20 @@ p.copyright {
 #sidebar {
     list-style-type: none;
 }
+
+.right {
+    float: right;
+}
+
+#show_tables {
+    width: 100%;
+    height:auto;
+    /*min-height:40%;*/
+    /*margin-bottom: 100px;*/
+}
+
+.footer_p {
+    position: absolute;
+    bottom:0;
+    left:0;
+}
