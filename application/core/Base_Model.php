@@ -44,6 +44,14 @@ class Base_Model extends CI_Model
         return $row;
     }
 
+    public function get_many_by()
+    {
+        $where = func_get_args();
+        $this->_set_where($where);
+
+        return $this->get_all();
+    }
+
      public function get_all()
     {
         $this->trigger('before_get');
@@ -88,6 +96,33 @@ class Base_Model extends CI_Model
         }
     }
 
+    public function update($primary_value, $data, $skip_validation = FALSE)
+    {
+        $valid = TRUE;
+
+        $data = $this->trigger('before_update', $data);
+
+        if ($skip_validation === FALSE)
+        {
+            $data = $this->validate($data);
+        }
+
+        if ($data !== FALSE)
+        {
+            $result = $this->db->where($this->primary_key, $primary_value)
+                               ->set($data)
+                               ->update($this->_table);
+
+            $this->trigger('after_update', array($data, $result));
+
+            return $result;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
      public function trigger($event, $data = FALSE, $last = TRUE)
     {
         if (isset($this->$event) && is_array($this->$event))
@@ -118,5 +153,17 @@ class Base_Model extends CI_Model
     {
         $method = ($multi) ? 'result' : 'row';
         return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
+    }
+
+    protected function _set_where($params)
+    {
+        if (count($params) == 1)
+        {
+            $this->db->where($params[0]);
+        }
+        else
+        {
+            $this->db->where($params[0], $params[1]);
+        }
     }
 }
