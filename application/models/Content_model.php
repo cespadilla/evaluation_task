@@ -14,7 +14,6 @@ class Content_model extends Base_Model {
         }
 
         public function create(){
-        	// print_r("here");
         	$post = $this->input->post();
         	$insert = array(
         		'text' => $post['val'],
@@ -22,7 +21,6 @@ class Content_model extends Base_Model {
         		'added_by_user_id' => $this->uid
     		);
     		$this->insert($insert);
-    		// $this->session->set_flashdata('message','Content Text Added!');
     		out_json($get);
         }
 
@@ -35,10 +33,7 @@ class Content_model extends Base_Model {
 	        	if($val){
 	        		$create = $this->db->select("concat_ws(' ', first_name,last_name) as name")->where('id',$val['added_by_user_id'])->get("users")->row_array();
 	        		$val['name'] = $create['name'];
-
-	        		// $rm = $this->db->select("concat_ws(' ', first_name,last_name) as name")->where('id',$val['deleted_by_user_id'])->get("users")->row_array();
                     $val['removed_by'] ="" ;
-	        		// $val['removed_by'] = $rm['name'];
 	        	}
 	        	$data[] = $val;
         	}
@@ -55,13 +50,13 @@ class Content_model extends Base_Model {
             out_json($update);
         }
 
-        public function getData(){
-           // $row = $this->get($id);
-
-        }
-
         public function modify(){
-            // $
+            $id = $this->input->post('id');
+            $update = array(
+                'text' => $this->input->post('text')
+            );
+            $this->update($id,$update);
+            out_json($update);
 
         }
 

@@ -17,9 +17,10 @@ class User_model extends Base_Model {
 			$row = $this->get($id);
 			if (count($row) > 0) return uclower($row->first_name . ' ' . $row->last_name);
 		}
-		public function get_delname($id) {
-			$row = $this->get($id);
-			if (count($row) > 0) return uclower($row->first_name . ' ' . $row->last_name);
-		}
+                
+        public function get_delname($id) {
+        	$row = $this->get($id);
+        	if (count($row) > 0) return uclower($row->first_name . ' ' . $row->last_name);
+        }
 
 }

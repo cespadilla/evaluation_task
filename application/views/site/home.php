@@ -47,18 +47,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+<?php $session = $this->session->userdata; 
+    if(array_key_exists("email", $session)){  ?>
+    
+                <a class="navbar-brand topnav" href="<?php echo base_url();?>admin/user/logout">Log out</a>
+<?php }else{ ?>
                 <a class="navbar-brand topnav" href="#" data-toggle="modal" data-target="#login_modal" data-whatever="@mdo">Log in</a>
+<?php }?>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
+            <?php ?>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#">Home</a>
                     </li>
-                    <!-- <li>
-                        <a href="#" >Dashboard</a>
-                    </li> -->
-                    
+                    <?php if(!array_key_exists("email", $session)){  ?>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#login_modal" data-whatever="@mdo">Dashboard</a>
+                    </li>
+                    <?php }else{?>
+                    <li>
+                        <a href="admin/dashboard">Dashboard</a>
+                    </li>
+                    <?php }?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

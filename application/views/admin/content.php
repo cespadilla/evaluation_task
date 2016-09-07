@@ -24,8 +24,8 @@
   			<td><?php echo $val['removed_by'];?></td>
   			<td><?php if($val['deleted_datetime']) echo date_format($deleted,"M d, Y H:i:s");?></td>
   			<td>
-  				<button type="button" class="btn btn-primary btn-xs">
-				  <span class="glyphicon glyphicon-edit" tooltip="Edit"aria-hidden="true"></span>
+  				<button type="button" class="btn btn-primary btn-xs" name="btn_edit">
+				  <span name="btn_edit" class="glyphicon glyphicon-edit" data-toggle="modal" data-id ="<?php echo $val['id'];?>" data-value ="<?php echo $val['text'];?>"  data-target="#modify_data" data-whatever="@mdo"  tooltip="Edit"aria-hidden="true"></span>
 				</button>
 				<button type="button" onclick="confirmDelete(<?php echo $val['id'];?>)" class="btn btn-danger btn-xs">
 				  <span class="glyphicon glyphicon-minus-sign" tooltip="Delete" aria-hidden="true"></span>
@@ -60,20 +60,47 @@
 
 	      </div>
 	      <div class="modal-footer">
-	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 	        <?php echo form_submit('submit', 'Add', 'onClick="addItem()" class="btn btn-success btn-lg btn-block"');?>
 	      </div>
 				<?php echo form_close();?>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+	    </div>
+	  </div>
+	</div>
 
+	<div class="modal fade" id ="modify_data" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Content</h4>
+	      </div>
+	      <div class="modal-body">
+		        <?php echo form_open('',array('class'=>'form-horizontal'));?>
+		        <div class="form-group">
+		            <?php echo form_label('Text','editTest');?>
+		            <?php echo form_error('editTest');?>
+		            <?php echo form_textarea('editTest','','class="form-control"');?>
+		        </div>
+		        <div class="form-group">
+		            <?php echo form_error('updated');?>
+		            <?php echo form_hidden('updated',date('Y-m-d H:i:s'));?>
+		        </div>
+		      
+
+	      </div>
+	      <div class="modal-footer">
+	        <?php echo form_submit('modify', 'edit', 'onClick="modifyData()" class="btn btn-success btn-lg btn-block"');?>
+	      </div>
+				<?php echo form_close();?>
+	    </div>
+	  </div>
+	</div>
   <p class="footer_p">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ? 'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 </div>
 
 <script type="text/javascript">
+var _id = "";
 	function confirmDelete(num) {
-		console.log(num);
 	    if (confirm("Are you sure?") == true) {
 	        $.ajax({
 				url: "content/remove",
@@ -88,10 +115,21 @@
 	    }
 	}
 
+	function modifyData(){
+		$.ajax({
+				url: "content/modify",
+				method: "POST",
+				data: {
+					id: _id,
+					text : $("textarea[name=editTest]").val()
+				}
+			}).done(function(response){
+				window.location.reload();
+		});
+	}
+
 
 	function addItem() {
-					// alert($("textarea[name=test]").val());
-		
 	        $.ajax({
 				url: "content/create",
 				method: "POST",
@@ -102,5 +140,13 @@
 			}).done(function(response){
 			});
 	}
+
+	$('#modify_data').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+            span = e.relatedTarget;
+            data = $(span).data();
+            _id = data.id;
+         	$("textarea[name=editTest]").val(data.value);
+    })
 </script>
  

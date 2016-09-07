@@ -40,10 +40,6 @@ class Content extends Base_Controller {
     public function remove(){
         return $this->content->remove();
     }
-
-    public function getData(){
-        return $this->content->getData();
-    }
     
     public function modify(){
         return $this->content->modify();
