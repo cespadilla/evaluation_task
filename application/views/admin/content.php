@@ -24,8 +24,8 @@
   			<td><?php echo $val['removed_by'];?></td>
   			<td><?php if($val['deleted_datetime']) echo date_format($deleted,"M d, Y H:i:s");?></td>
   			<td>
-  				<button type="button" class="btn btn-primary btn-xs" name="btn_edit">
-				  <span name="btn_edit" class="glyphicon glyphicon-edit" data-toggle="modal" data-id ="<?php echo $val['id'];?>" data-value ="<?php echo $val['text'];?>"  data-target="#modify_data" data-whatever="@mdo"  tooltip="Edit"aria-hidden="true"></span>
+  				<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-id ="<?php echo $val['id'];?>" data-value ="<?php echo $val['text'];?>"  data-target="#modify_data"  name="btn_edit">
+				  <span name="btn_edit" class="glyphicon glyphicon-edit" data-whatever="@mdo"  tooltip="Edit"aria-hidden="true"></span>
 				</button>
 				<button type="button" onclick="confirmDelete(<?php echo $val['id'];?>)" class="btn btn-danger btn-xs">
 				  <span class="glyphicon glyphicon-minus-sign" tooltip="Delete" aria-hidden="true"></span>
@@ -110,7 +110,7 @@ var _id = "";
 					deleted : $("input[name=created]").val()
 				}
 			}).done(function(response){
-				window.location.reload();
+				location.reload();
 			});
 	    }
 	}
@@ -124,7 +124,7 @@ var _id = "";
 					text : $("textarea[name=editTest]").val()
 				}
 			}).done(function(response){
-				window.location.reload();
+				location.reload();
 		});
 	}
 
