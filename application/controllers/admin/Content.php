@@ -15,14 +15,20 @@ class Content extends Base_Controller {
     }
 
 	public function index()
-	{
+	{  
 
-		$data['title'] = "Dashboard";
-        // $data['data'] ="";
-        $data['data'] = $this->read();
-        $this->load->view('admin/common/header',$data);
-        $this->load->view('admin/content');
-        $this->load->view('admin/common/footer');
+        $session = $this->session->userdata;
+        if(array_key_exists("email", $session)){
+            $data['title'] = "Content";
+            // $data['data'] ="";
+            $data['data'] = $this->read();
+
+            $this->load->view('admin/common/header',$data);
+            $this->load->view('admin/content');
+            $this->load->view('admin/common/footer');
+        }else{
+            redirect('', 'refresh');
+        }
     }
 
     public function logout(){

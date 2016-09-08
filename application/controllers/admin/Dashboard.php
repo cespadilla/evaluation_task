@@ -9,7 +9,7 @@ class Dashboard extends Base_Controller {
 		if(array_key_exists("email", $session)){
 			$this->show();
 		}else{
-			redirect('auth/login', 'refresh');
+			redirect('', 'refresh');
 		}
 	}
 
