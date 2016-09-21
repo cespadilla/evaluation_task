@@ -47,30 +47,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-<?php $session = $this->session->userdata; 
-    if(array_key_exists("email", $session)){  ?>
-    
-                <a class="navbar-brand topnav" href="<?php echo base_url();?>admin/user/logout">Log out</a>
-<?php }else{ ?>
-                <a class="navbar-brand topnav" href="#" data-toggle="modal" data-target="#login_modal" data-whatever="@mdo">Log in</a>
-<?php }?>
+
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <?php ?>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">Home</a>
+                        <a href=" ">Home</a>
                     </li>
-                    <?php if(!array_key_exists("email", $session)){  ?>
+                   
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#login_modal" data-whatever="@mdo">Dashboard</a>
+                        <a href="admin">Dashboard</a>
                     </li>
-                    <?php }else{?>
-                    <li>
-                        <a href="admin/dashboard">Dashboard</a>
-                    </li>
-                    <?php }?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -109,62 +96,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.container -->
 
     </div>
-    <div class="modal fade" id ="login_modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><?php echo lang('login_heading');?></h4>
-	      </div>
-	      <div class="modal-body">
-	      		<?php echo form_open("auth/login");?>
-				<?php echo $this->session->flashdata('message');?>
-		        <?php echo form_open('',array('class'=>'form-horizontal'));?>
-		        <div class="form-group">
-		            <?php echo form_label('Username','identity');?>
-		            <?php echo form_error('identity');?>
-		            <?php echo form_input('identity','','class="form-control"');?>
-		        </div>
-		        <div class="form-group">
-		            <?php echo form_label('Password','password');?>
-		            <?php echo form_error('password');?>
-		            <?php echo form_password('password','','class="form-control"');?>
-		        </div>
-		        <div class="form-group">
-		            <label>
-		                <?php echo form_checkbox('remember','1',FALSE);?> Remember me
-		            </label>
-		        </div>
-
-
-
-	      </div>
-	      <div class="modal-footer">
-	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-	        <?php echo form_submit('submit', 'Log in', 'class="btn btn-primary btn-lg btn-block"');?>
-	      </div>
-				<?php echo form_close();?>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-    <!-- /.intro-header -->
-
-    <!-- Page Content -->
-
-    <!-- /.banner -->
-
-    <!-- Footer -->
+    
     <footer class=" center-block">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
                         <li>
-                            <a href="#">Home</a>
+                            <a href=" ">Home</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="dashboard">Dashboard</a>
                         </li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Content extends Base_Controller {
+class Content extends Admin_Controller {
 
 	public function __construct() {
         parent::__construct();
@@ -17,18 +17,9 @@ class Content extends Base_Controller {
 	public function index()
 	{  
 
-        $session = $this->session->userdata;
-        if(array_key_exists("email", $session)){
-            $data['title'] = "Content";
-            // $data['data'] ="";
-            $data['data'] = $this->read();
-
-            $this->load->view('admin/common/header',$data);
-            $this->load->view('admin/content');
-            $this->load->view('admin/common/footer');
-        }else{
-            redirect('', 'refresh');
-        }
+        $this->data['page_title'] = 'Groups';
+        $this->data['groups'] = $this->ion_auth->groups()->result();
+        $this->render('admin/groups/list_groups_view');
     }
 
     public function logout(){
