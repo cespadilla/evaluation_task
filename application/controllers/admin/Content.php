@@ -5,21 +5,7 @@ class Content extends Admin_Controller {
 
 	public function __construct() {
         parent::__construct();
-        
-        $this->models = array(
-            'user',
-            'content'
-        );
-        
-        $this->_load_models();
-    }
-
-	public function index()
-	{  
-
-        $this->data['page_title'] = 'Groups';
-        $this->data['groups'] = $this->ion_auth->groups()->result();
-        $this->render('admin/groups/list_groups_view');
+        $this->load->model("Content_model");
     }
 
     public function logout(){
@@ -27,7 +13,9 @@ class Content extends Admin_Controller {
 	}
 
     public function create(){
-        $this->content->create();
+        $this->form_validation->set_rules('text_field','text_field','required|min_length[20]');
+        $this->data['page_title'] = "Create Data";
+        $this->render('admin/content_create');
     }
 
     public function read(){
@@ -39,7 +27,13 @@ class Content extends Admin_Controller {
     }
     
     public function modify(){
-        return $this->content->modify();
+        $this->data['page_title'] = "Edit Data";
+        $this->render('admin/content_edit');
+        // return $this->content->modify();
+    }
+
+    public function create_data(){
+        $this->Content_model->create();
     }
 
 }

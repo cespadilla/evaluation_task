@@ -7,27 +7,27 @@ class Content_model extends CI_Model {
                 parent::__construct();
 
                 $this->_table = "content";
-                if (isset($this->session->userdata['user_id']))
-				{
-					$this->uid = $this->session->userdata['user_id'];
-				}
+                
         }
 
         public function create(){
         	$post = $this->input->post();
-        	$insert = array(
-        		'text' => $post['val'],
-        		'datetime_added' => $post['created'],
-        		'added_by_user_id' => $this->uid
-    		);
-    		$this->insert($insert);
-    		out_json($get);
+            $user = $this->ion_auth->user()->row();
+            $insert = array(
+                'text' => $post['text_field'],
+                'datetime_added' => date('Y-m-d H:i:s'),
+                'added_by_user_id' => $user->user_id
+            );
+            // $this->db->insert('content', $insert);
+            // $this->ion_auth->messages();
+            redirect('admin');
         }
 
         public function read(){
-        	$row =  $this->get_many_by("deleted_by_user_id is null");
+        	// $row =  $this->("deleted_by_user_id is null");
+            $row = $this->db->get_where('content', array('deleted_by_user_id' => null))->result_array();
         	$data  = array();
-        	$val = array();
+        	// $val = array();
         	foreach ($row as $key) {
         		$val = (array) $key;
 	        	if($val){
@@ -58,6 +58,11 @@ class Content_model extends CI_Model {
             $this->update($id,$update);
             out_json($update);
 
+        }
+
+        protected function render($the_view = NULL, $template = 'admin_master')
+        {
+            parent::render($the_view, $template);
         }
 
 }
