@@ -20,12 +20,17 @@
           <td> <?php echo $value['removed_by'];?></td>
           <td> <?php echo $value['deleted_by_user_id'];?></td>
           <td>
-              <button type="button" class="btn btn-primary btn-xs" onclick="location.href='admin/content/modify'" >
+              <!-- <button type="button" class="btn btn-primary btn-xs" onclick="location.href='admin/content/modify'" >
                <span name="btn_edit" class="glyphicon glyphicon-edit" ></span>
-              </button>
-              <button type="button" class="btn btn-danger btn-xs" >
+              </button> -->
+              <?php
+                echo anchor('admin/content/modify/'.$value['id'],'<span name="btn_edit" class="glyphicon glyphicon-edit green" aria-hidden="true" ></span>');
+                echo "   ";
+                echo anchor('admin/content/delete/'.$value['id'],'<span name="btn_edit" class="glyphicon glyphicon-minus-sign red" aria-hidden="true" ></span>','onclick="return confirm(\'Are you sure you want to delete?\')"');
+              ?> 
+              <!-- <button type="button" class="btn btn-danger btn-xs" >
                 <span class="glyphicon glyphicon-minus-sign" tooltip="Delete" aria-hidden="true"></span>
-              </button>
+              </button> -->
           </td>
         </tr>     
    <?php  }?>
