@@ -22,19 +22,23 @@ class Content extends Admin_Controller {
         return $this->content->read();
     }
 
-    public function remove(){
-        return $this->content->remove();
+    public function remove($c_id){
+        return $this->Content_model->remove($c_id);
     }
     
-    public function modify(){
+    public function modify($c_id){
         $this->data['page_title'] = "Edit Data";
+        $this->data['content'] = $this->Content_model->get($c_id);
         $this->render('admin/content_edit');
-        // return $this->content->modify();
+        
     }
 
     public function create_data(){
         $this->Content_model->create();
     }
 
+    public function edit(){
+        $this->Content_model->modify();
+    }
 }
 

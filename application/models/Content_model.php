@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Content_model extends CI_Model {
+class Content_model extends MY_Model {
+        public $table = 'content';
 
         public function __construct()
         {
@@ -8,26 +9,23 @@ class Content_model extends CI_Model {
 
                 $this->_table = "content";
                 
+                $this->user = $this->ion_auth->user()->row();
         }
 
         public function create(){
-        	$post = $this->input->post();
-            $user = $this->ion_auth->user()->row();
+            $post = $this->input->post();
             $insert = array(
                 'text' => $post['text_field'],
                 'datetime_added' => date('Y-m-d H:i:s'),
-                'added_by_user_id' => $user->user_id
+                'added_by_user_id' => $this->user->user_id
             );
-            // $this->db->insert('content', $insert);
-            // $this->ion_auth->messages();
+            $this->db->insert('content', $insert);
             redirect('admin');
         }
 
         public function read(){
-        	// $row =  $this->("deleted_by_user_id is null");
             $row = $this->db->get_where('content', array('deleted_by_user_id' => null))->result_array();
         	$data  = array();
-        	// $val = array();
         	foreach ($row as $key) {
         		$val = (array) $key;
 	        	if($val){
@@ -40,23 +38,23 @@ class Content_model extends CI_Model {
         	return $data;
         }
 
-        public function remove(){
-            $id = $this->input->post('id');
+        public function remove($c_id){
             $update = array(
-                "deleted_by_user_id" => $this->uid,
+                "deleted_by_user_id" => $this->user->user_id,
                 "deleted_datetime" => $this->input->post('deleted')
             );
-            $this->update($id,$update);
-            out_json($update);
+            $this->update($update,$c_id);
+            redirect('admin','refresh');
         }
 
         public function modify(){
-            $id = $this->input->post('id');
+            $post = $this->input->post();
+            $id = $post['c_id'];
             $update = array(
-                'text' => $this->input->post('text')
+                'text' => $post['text_field']
             );
-            $this->update($id,$update);
-            out_json($update);
+            $this->update($update,$id);
+            redirect('admin','refresh');
 
         }
 
